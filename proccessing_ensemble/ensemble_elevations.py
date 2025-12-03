@@ -8,7 +8,7 @@ import os
 # ----------------------------------------------------------------------------
 # Paths
 # ----------------------------------------------------------------------------
-path_ensemble="/p/projects/megarun/luciagu/data/tabone2024/ensemble_reduced/*"
+path_ensemble="path/ensemble_reduced/*"
 path_output="../output"
 
 # ---------------------------------------------

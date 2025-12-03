@@ -7,8 +7,8 @@ import os
 # ----------------------------------------------------------------------------
 # Paths
 # ----------------------------------------------------------------------------
-path_ensemble="/p/projects/megarun/luciagu/data/tabone2024/ensemble_reduced/*"
-path_schumacher="/p/projects/megarun/luciagu/data/schumacher2018/schumacher2018_dataset.nc"
+path_ensemble="path/ensemble_reduced/*"
+path_schumacher="../../FesmData/Schumacher2018_GIA_GrIS/data/schumacher2018_GR.nc"
 path_output="../output"
 
 # ----------------------------------------------------------------------------
