@@ -9,12 +9,18 @@ import os
 # ----------------------------------------------------------------------------
 # Paths
 # ----------------------------------------------------------------------------
-path_ensemble="path/ensemble_reduced/*"
+path_ensemble="/p/projects/megarun/luciagu/data/tabone2024/ensemble_reduced/*"
 path_output="../output"
 sim_paths = sorted(glob.glob(path_ensemble))
 
 # ---------------------------------------------
 # Calculations
+# This script creates a NetCDF file with ensemble timeseries from yelmo1D files
+# It includes the following variables:
+# - V_sle: Sea Level Equivalent Volume
+# - A_ice: Ice Area
+# - A_ice_g: Grounded Ice Area
+# - T_srf: Surface Temperature (annual mean over the domain)
 # ---------------------------------------------
 V_ensemble = []
 A_ensemble = []
@@ -66,4 +72,4 @@ ds_ensemble = xr.Dataset(
     }
 )
 
-ds_ensemble.to_netcdf("../output/timeseries.nc")
+ds_ensemble.to_netcdf("../output/timeseries_from1D.nc")
