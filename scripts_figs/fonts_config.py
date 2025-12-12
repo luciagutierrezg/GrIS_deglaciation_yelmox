@@ -8,7 +8,7 @@ def set_computer_modern():
     font_manager.fontManager.addfont(font_path)  
     font_prop = font_manager.FontProperties(fname=font_path)
     rcParams['font.family'] = font_prop.get_name()
-    rcParams['font.size'] = 16
+    rcParams['font.size'] = 15
 
 def truncate_colormap(cmap, minval, maxval):
 

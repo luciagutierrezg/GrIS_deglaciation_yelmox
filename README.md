@@ -4,11 +4,12 @@ The proxies and measurements against which the ensemble is compared are processe
 
 
 
-| Metric                 | Data                                                   | Description                          | Source |
-|------------------------|--------------------------------------------------------|--------------------------------------|--------|
-| Present-day            | Uplift rates                                           | GPS measurements                     | [Schumacher et al. (2018)](https://doi.org/10.1093/gji/ggy235) |
-|                        | Ice cover and ice thickness                            | BedMachine v5                        | [Morlighem et al. (2022)](https://doi.org/10.5067/GMEVBWFLWA7X) |
-| LGM                    | LGM extent                                             | PaleoGrIS dataset v1.0               | [Leger et al. (2024)](https://cp.copernicus.org/articles/20/701/2024/) |
-| Timing of the retreat  | Isochrone-based reconstruction of ice-sheet evolution  | PaleoGrIS dataset v1.0               | [Leger et al. (2024)](https://cp.copernicus.org/articles/20/701/2024/) |
-|                        | Surface elevation change at the ice-core locations     | Reconstruction data                  | [Vinther et al. (2009)](https://doi.org/10.1038/nature08355) |
-|                        | Relative Sea Level (RSL) change at different locations | In situ measurements                 | Pending |
+| Proxy                  | Metric | Data                                                   | Description                          | Source |
+|------------------------|--------|--------------------------------------------------------|--------------------------------------|--------|
+| Present-day            |  | Uplift rates                                           | GPS measurements                     | [Schumacher et al. (2018)](https://doi.org/10.1093/gji/ggy235) |
+|                        | RMSE | Ice cover and ice thickness                            | BedMachine v5                        | [Morlighem et al. (2022)](https://doi.org/10.5067/GMEVBWFLWA7X) |
+|                        | RMSE | Ice surface velocity                          | BedMachine v5                        | [Morlighem et al. (2022)](https://doi.org/10.5067/GMEVBWFLWA7X) |
+| LGM                    | | LGM extent                                             | PaleoGrIS dataset v1.0               | [Leger et al. (2024)](https://cp.copernicus.org/articles/20/701/2024/) |
+| Timing of the retreat  | RMSE | Isochrone-based reconstruction of ice-sheet evolution  | PaleoGrIS dataset v1.0               | [Leger et al. (2024)](https://cp.copernicus.org/articles/20/701/2024/) |
+|                        | | Surface elevation change at the ice-core locations     | Reconstruction data                  | [Vinther et al. (2009)](https://doi.org/10.1038/nature08355) |
+|                        | | Relative Sea Level (RSL) change at different locations | In situ measurements                 | Pending |
