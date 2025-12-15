@@ -7,11 +7,11 @@ import xarray as xr
 #  paths 
 # ---------------------------------------------------------------------------------------------
 
-path_base = "path/ensemble/"
-path_new = "path/ensemble_reduced/"
+path_base = "../../ensemble/"
+path_new = "../../ensemble_reduced/"
 vars_new = ["H_ice", "z_srf", "z_bed", "uxy_s", "f_grnd", "mask_bed", "z_sl","Ta_ann", "Ta_sum"]
 os.makedirs(path_new, exist_ok=True)
-a,b=1501,1671 # range of folders
+a,b=118,3000 # range of folders
 
 # ---------------------------------------------------------------------------------------------
 #  procesing: 

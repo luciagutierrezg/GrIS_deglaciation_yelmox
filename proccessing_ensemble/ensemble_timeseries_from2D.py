@@ -9,10 +9,10 @@ import os
 # ----------------------------------------------------------------------------
 # Paths
 # ----------------------------------------------------------------------------
-path_ensemble="/p/projects/megarun/luciagu/data/tabone2024/ensemble_reduced/*"
-path_output="../output"
+path_ensemble="../../ensemble_reduced/*"
+path_output="../../output"
 sim_paths = sorted(glob.glob(path_ensemble))
-file_name = "yelmo2D_temperatures.nc" # Modificar cuando esté todo en un único file (idealmente todo en yelmo2D_reduced.nc)
+file_name = "yelmo2D_reduced.nc"
 
 # ---------------------------------------------
 # Calculations
@@ -28,12 +28,10 @@ valid_sim_indices = []
 
 for i, sim_path in enumerate(sim_paths):
 
-    file_path1 = os.path.join(sim_path, file_name)
-    file_path2 = os.path.join(sim_path, "yelmo2D_reduced.nc")
+    file_path = os.path.join(sim_path, file_name)
 
     try:
-        yelmo1 = xr.open_dataset(file_path1)
-        yelmo2 = xr.open_dataset(file_path2)
+        yelmo = xr.open_dataset(file_path)
     except FileNotFoundError:
         print(f"[ERROR] No se encontró el archivo: {file_path1}. Se omite esta simulación.")
         continue
@@ -41,9 +39,9 @@ for i, sim_path in enumerate(sim_paths):
         print(f"[ERROR] No se pudo abrir {file_path1}: {e}. Se omite esta simulación.")
         continue
 
-    time=yelmo1.time.values
-    T_ann=(yelmo1.Ta_ann.where(yelmo2.mask_bed==0)).mean(dim=["xc","yc"])
-    T_sum=(yelmo1.Ta_sum.where(yelmo2.mask_bed==0)).mean(dim=["xc","yc"])
+    time=yelmo.time.values
+    T_ann=(yelmo.Ta_ann.where(yelmo.mask_bed==0)).mean(dim=["xc","yc"])
+    T_sum=(yelmo.Ta_sum.where(yelmo.mask_bed==0)).mean(dim=["xc","yc"])
     
     T_ann_ensemble.append(T_ann)
     T_sum_ensemble.append(T_sum)
@@ -65,4 +63,4 @@ ds_ensemble = xr.Dataset(
     }
 )
 
-ds_ensemble.to_netcdf("../output/timeseries_from2D.nc")
+ds_ensemble.to_netcdf(f"{path_output}/timeseries_from2D.nc")

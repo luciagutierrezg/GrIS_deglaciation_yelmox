@@ -9,8 +9,8 @@ import os
 # ----------------------------------------------------------------------------
 # Paths
 # ----------------------------------------------------------------------------
-path_ensemble="/p/projects/megarun/luciagu/data/tabone2024/ensemble_reduced/*"
-path_output="../output"
+path_ensemble="../../ensemble_reduced/*"
+path_output="../../output"
 sim_paths = sorted(glob.glob(path_ensemble))
 
 # ---------------------------------------------
@@ -72,4 +72,4 @@ ds_ensemble = xr.Dataset(
     }
 )
 
-ds_ensemble.to_netcdf("../output/timeseries_from1D.nc")
+ds_ensemble.to_netcdf(f"{path_output}/timeseries_from1D.nc")
