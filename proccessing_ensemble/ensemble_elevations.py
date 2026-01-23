@@ -8,7 +8,7 @@ import os
 # ----------------------------------------------------------------------------
 # Paths
 # ----------------------------------------------------------------------------
-path_ensemble="path/ensemble_reduced/*"
+path_ensemble="../../ensemble_reduced/*"
 path_output="../output"
 
 # ---------------------------------------------
@@ -28,8 +28,9 @@ def z_ice_core(ds, ice_core):
     
     dist = np.sqrt((ds.lat2D - lat)**2 + (ds.lon2D - lon)**2)
     iy, ix = np.unravel_index(dist.argmin(), dist.shape)
-    z = ds["z_srf"].isel(yc=iy, xc=ix)
-
+    z_bed = ds["z_bed"].isel(yc=iy, xc=ix)
+    H_ice = ds["H_ice"].isel(yc=iy, xc=ix)
+    z=z_bed+H_ice
     return z.values
 
 
@@ -43,7 +44,7 @@ sim_paths = sorted(glob.glob(path_ensemble))
 for i, sim_path in enumerate(sim_paths):
 
     file_path = os.path.join(sim_path, "yelmo2D_reduced.nc")
-
+    n_sim = int(os.path.basename(sim_path))
     try:
         yelmo = xr.open_dataset(file_path)
     except FileNotFoundError:
@@ -69,7 +70,7 @@ for i, sim_path in enumerate(sim_paths):
         time = yelmo["time"].values
 
     z_ens.append(z)
-    valid_sim_indices.append(i)
+    valid_sim_indices.append(n_sim)
 
 z_ens = np.stack(z_ens, axis=0)
 
@@ -82,5 +83,5 @@ ds_ensemble = xr.Dataset(
         "time": time,
         "ice_core": ice_core_ids
     })
-
+ds_ensemble = ds_ensemble.sortby("sim")
 ds_ensemble.to_netcdf(f"{path_output}/ensemble_elevations.nc")

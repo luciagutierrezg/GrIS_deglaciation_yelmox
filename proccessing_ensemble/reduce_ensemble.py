@@ -7,11 +7,11 @@ import xarray as xr
 #  paths 
 # ---------------------------------------------------------------------------------------------
 
-path_base = "../../ensemble/"
+path_base = "../../ensemble"
 path_new = "../../ensemble_reduced/"
 vars_new = ["H_ice", "z_srf", "z_bed", "uxy_s", "f_grnd", "mask_bed", "z_sl","Ta_ann", "Ta_sum"]
 os.makedirs(path_new, exist_ok=True)
-a,b=118,3000 # range of folders
+a,b=600,601 # range of folders
 
 # ---------------------------------------------------------------------------------------------
 #  procesing: 
@@ -47,6 +47,22 @@ for i in range(a,b):
     vars_existentes = [v for v in vars_new if v in ds]
     ds_reducido = ds[vars_existentes]
 
+    # Add the age of the isochrones
+    H_ice = ds_reducido.H_ice
+    f = ds_reducido.f_grnd
+    iso = np.full_like(H_ice[0,:,:], np.nan)
+
+    for t in reversed(H_ice.time.values):
+        H_t = H_ice.sel(time=t).values
+        f_t = f.sel(time=t).values
+        mask = np.isnan(iso) & (H_t > 0) & (f_t == 1)
+        iso[mask] = -t / 1000
+        
+    ds_reducido["isochrone"] = (("yc", "xc"), iso)
+    ds_reducido["isochrone"].attrs = {
+        "long_name": "Isochrone age",
+        "units": "kyr BP"}
+    
     # Save the new reduced NetCDF
     ds_reducido.to_netcdf(dst_nc)
     ds.close()

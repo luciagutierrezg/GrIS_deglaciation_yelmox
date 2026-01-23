@@ -10,7 +10,7 @@ import os
 # Paths
 # ----------------------------------------------------------------------------
 path_ensemble="../../ensemble_reduced/*"
-path_output="../../output"
+path_output="../output"
 sim_paths = sorted(glob.glob(path_ensemble))
 
 # ---------------------------------------------
@@ -31,7 +31,7 @@ valid_sim_indices = []
 for i, sim_path in enumerate(sim_paths):
 
     file_path = os.path.join(sim_path, "yelmo1D.nc")
-
+    n_sim = int(os.path.basename(sim_path))
     try:
         yelmo = xr.open_dataset(file_path)
     except FileNotFoundError:
@@ -51,7 +51,7 @@ for i, sim_path in enumerate(sim_paths):
     A_ensemble.append(A_ice)
     A_g_ensemble.append(A_ice_g)
     T_ensemble.append(T)
-    valid_sim_indices.append(i)
+    valid_sim_indices.append(n_sim)
 
 V_ensemble = np.stack(V_ensemble, axis=0)
 A_ensemble = np.stack(A_ensemble, axis=0)
@@ -71,5 +71,5 @@ ds_ensemble = xr.Dataset(
         "time": time
     }
 )
-
+ds_ensemble = ds_ensemble.sortby("sim")
 ds_ensemble.to_netcdf(f"{path_output}/timeseries_from1D.nc")

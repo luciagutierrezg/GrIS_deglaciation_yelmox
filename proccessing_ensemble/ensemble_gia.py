@@ -7,7 +7,7 @@ import os
 # ----------------------------------------------------------------------------
 # Paths
 # ----------------------------------------------------------------------------
-path_ensemble="path/ensemble_reduced/*"
+path_ensemble="../../ensemble_reduced/*"
 path_schumacher="../../FesmData/Schumacher2018_GIA_GrIS/data/schumacher2018_GR.nc"
 path_output="../output"
 
@@ -29,7 +29,7 @@ valid_sim_indices = []
 for i, sim_path in enumerate(sim_paths):
 
     file_path = os.path.join(sim_path, "yelmo2D_reduced.nc")
-
+    n_sim = int(os.path.basename(sim_path))
     try:
         yelmo = xr.open_dataset(file_path)
     except FileNotFoundError:
@@ -51,7 +51,7 @@ for i, sim_path in enumerate(sim_paths):
     v_all = np.array(v_all, dtype=float)
     
     v_ensamble.append(v_all)
-    valid_sim_indices.append(i)
+    valid_sim_indices.append(n_sim)
 
 x_all = []
 y_all = []
@@ -80,5 +80,5 @@ ds_ensemble = xr.Dataset(
         "yc": (("station"), y_all),
     }
 )
-
+ds_ensemble = ds_ensemble.sortby("sim")
 ds_ensemble.to_netcdf(f"{path_output}/ensemble_gia.nc")
