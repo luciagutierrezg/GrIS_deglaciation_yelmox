@@ -71,18 +71,14 @@ for i, sim_path in enumerate(sim_paths):
         _, A, _ = variables(yelmo, regs.mask, r)
         A_all.append(A.values)
 
-    # convertir lista → array (tiempo x regiones)
     A_all = np.stack(A_all, axis=1)
     A_ensemble.append(A_all)
     valid_sim_indices.append(n_sim)   
 
-
-# convertir lista → array (simulación x tiempo)
 T_ann_ensemble = np.stack(T_ann_ensemble, axis=0)
 T_sum_ensemble = np.stack(T_sum_ensemble, axis=0)
 A_ensemble = np.stack(A_ensemble, axis=0)
 
-# construir dataset final
 ds_ensemble = xr.Dataset(
     data_vars={
         "T_ann": (("sim", "time"), T_ann_ensemble),
